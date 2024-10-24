@@ -4,7 +4,7 @@
 The goal of this project is to create a sharing and give-away app built on top of the NOSTR protocol.
 
 Other services exist online for sharing goods between people:
-- Olio
+- Olio    
 - Facebook Marketplace
 - even Instagram is used for some sales and give-aways
 
@@ -15,10 +15,10 @@ NOSTR protocol provides a means of creating interoperable applications. A sharin
 
 ## code
 This application will make use of the NOSTR protocol.
-For an overview of the NOSTR protocol: https://github.com/nostr-protocol/nostr
-For an overview of the NOSTR NIPS: https://github.com/nostr-protocol/nips
-For a NOSTR Development Kit, NDK: https://github.com/nostr-dev-kit/ndk
-For a React NDK: https://github.com/nostr-dev-kit/ndk-react 
+- For an overview of the NOSTR protocol: https://github.com/nostr-protocol/nostr
+- For an overview of the NOSTR NIPS: https://github.com/nostr-protocol/nips
+- For a NOSTR Development Kit, NDK: https://github.com/nostr-dev-kit/ndk
+- For a React NDK: https://github.com/nostr-dev-kit/ndk-react 
 
 This project is a fork of the React Native Boilerplate repository: thecodingmachine.github.io/react-native-boilerplate/
 this boilerplate determines the file structure.
