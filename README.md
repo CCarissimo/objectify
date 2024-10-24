@@ -27,7 +27,7 @@ This project uses gluestack-ui component library, https://gluestack.io/, for bas
 ## Features and Functionality
 
 ### objects
-Each object created by a user will use a standardized formatting. For example, we could already use a formatting which has been proposed for what they call "classified listings" from !(NOSTR NIP 99)[https://github.com/nostr-protocol/nips/blob/master/99.md]. 
+Each object created by a user will use a standardized formatting. For example, we could already use a formatting which has been proposed for what they call "classified listings" from ![NOSTR NIP 99](https://github.com/nostr-protocol/nips/blob/master/99.md). 
 
 ```jsonc
 {
