@@ -1,9 +1,18 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*",
+        "./*"
+      ],
+      "tailwind.config": [
+        "./tailwind.config.js"
+      ]
     },
     "allowImportingTsExtensions": false,
     "module": "esnext",
@@ -22,5 +31,10 @@
     "react-native.config.js",
     "jest.setup.ts"
   ],
-  "exclude": ["node_modules", "_", "android", "ios"]
+  "exclude": [
+    "node_modules",
+    "_",
+    "android",
+    "ios"
+  ]
 }

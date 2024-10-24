@@ -8,6 +8,14 @@ import { useI18n, useUser } from '@/hooks';
 import { AssetByVariant, IconByVariant, Skeleton } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
 
+import {
+  Button,
+  ButtonText,
+  ButtonSpinner,
+  ButtonIcon,
+  ButtonGroup,
+} from '@/components/atoms/button';
+
 function Example() {
   const { t } = useTranslation();
   const { useFetchOneQuery } = useUser();
@@ -68,6 +76,9 @@ function Example() {
 
         <View style={[gutters.paddingHorizontal_32, gutters.marginTop_40]}>
           <View style={[gutters.marginTop_40]}>
+            <Button size="md" variant="solid" action="primary" >
+              <ButtonText>Hello World!</ButtonText>
+            </Button>
             <Text style={[fonts.size_40, fonts.gray800, fonts.bold]}>
               {t('screen_example.title')}
             </Text>

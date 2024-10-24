@@ -1,5 +1,8 @@
 import 'react-native-gesture-handler';
 
+import "../global.css";
+import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { MMKV } from 'react-native-mmkv';
@@ -24,13 +27,13 @@ export const storage = new MMKV();
 
 function App() {
   return (
-    <GestureHandlerRootView>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider storage={storage}>
-          <ApplicationNavigator />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </GestureHandlerRootView>
+    <GluestackUIProvider mode="light"><GestureHandlerRootView>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider storage={storage}>
+            <ApplicationNavigator />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </GestureHandlerRootView></GluestackUIProvider>
   );
 }
 
