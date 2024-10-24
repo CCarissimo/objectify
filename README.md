@@ -20,8 +20,6 @@ This application will make use of the NOSTR protocol.
 - For a NOSTR Development Kit, NDK: https://github.com/nostr-dev-kit/ndk
 - For a React NDK: https://github.com/nostr-dev-kit/ndk-react 
 
-This project is a fork of the React Native Boilerplate repository: thecodingmachine.github.io/react-native-boilerplate/
-this boilerplate determines the file structure.
+This project is a fork of the React Native Boilerplate repository, https://thecodingmachine.github.io/react-native-boilerplate/, for the file structure.
 
-It integrates gluestack-ui component library: gluestack.io/
-this libary provides basic, useful and pretty components
+This project uses gluestack-ui component library, https://gluestack.io/, for provides basic, useful and pretty components
