@@ -1,5 +1,9 @@
 # Objectify
 
+```
+yarn start
+```
+
 ## purpose 
 The goal of this project is to create a sharing and give-away app built on top of the NOSTR protocol.
 
