@@ -7,6 +7,10 @@ import { useI18n, useUser } from '@/hooks';
 
 import { AssetByVariant, IconByVariant, Skeleton } from '@/components/atoms';
 import { SafeScreen } from '@/components/templates';
+import GlobalFeed from '@/components/organisms/GlobalFeed/GlobalFeed';
+
+import type { RootScreenProps } from '@/navigation/types';
+import { Paths } from '@/navigation/paths';
 
 import {
   Button,
@@ -16,7 +20,8 @@ import {
   ButtonGroup,
 } from '@/components/atoms/button';
 
-function Example() {
+
+function Example({ navigation }: RootScreenProps<Paths.Example>) {
   const { t } = useTranslation();
   const { useFetchOneQuery } = useUser();
   const { toggleLanguage } = useI18n();
@@ -48,6 +53,18 @@ function Example() {
     changeTheme(variant === 'default' ? 'dark' : 'default');
   };
 
+  const goToCards = () => {
+    navigation.navigate(Paths.CardsScreen)
+  }
+
+  const goToInventory = () => {
+    navigation.navigate(Paths.Inventory)
+  }
+
+  const goToCreate = () => {
+    navigation.navigate(Paths.CreateItem)
+  }
+
   return (
     <SafeScreen
       isError={fetchOneUserQuery.isError}
@@ -76,16 +93,19 @@ function Example() {
 
         <View style={[gutters.paddingHorizontal_32, gutters.marginTop_40]}>
           <View style={[gutters.marginTop_40]}>
-            <Button size="md" variant="solid" action="primary" >
-              <ButtonText>Hello World!</ButtonText>
-            </Button>
+            {/* <Button size="md" variant="solid" action="primary" onPress={goToCards}>
+              <ButtonText>Go To Cards</ButtonText>
+            </Button> */}
             <Text style={[fonts.size_40, fonts.gray800, fonts.bold]}>
-              {t('screen_example.title')}
+              Objectify
+              {/* {t('screen_example.title')} */}
             </Text>
             <Text
               style={[fonts.size_16, fonts.gray200, gutters.marginBottom_40]}
             >
-              {t('screen_example.description')}
+              Landing screen for the app, where you can then navigate to the desired 
+              functionalities by pressing buttons
+              {/* {t('screen_example.description')} */}
             </Text>
           </View>
 
@@ -104,7 +124,7 @@ function Example() {
               width={64}
             >
               <TouchableOpacity
-                onPress={() => setCurrentId(Math.ceil(Math.random() * 10 + 1))}
+                onPress={goToCards}
                 style={[components.buttonCircle, gutters.marginBottom_16]}
                 testID="fetch-user-button"
               >
@@ -113,7 +133,7 @@ function Example() {
             </Skeleton>
 
             <TouchableOpacity
-              onPress={onChangeTheme}
+              onPress={goToCreate}
               style={[components.buttonCircle, gutters.marginBottom_16]}
               testID="change-theme-button"
             >
@@ -121,7 +141,7 @@ function Example() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={toggleLanguage}
+              onPress={goToInventory}
               style={[components.buttonCircle, gutters.marginBottom_16]}
               testID="change-language-button"
             >

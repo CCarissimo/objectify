@@ -1,3 +1,5 @@
+import 'react-native-url-polyfill/auto';
+import { TextDecoder, TextEncoder } from 'text-encoding';
 import { AppRegistry } from 'react-native';
 
 import { name as appName } from './app.json';

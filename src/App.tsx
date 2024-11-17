@@ -10,6 +10,9 @@ import { MMKV } from 'react-native-mmkv';
 import { ThemeProvider } from '@/theme';
 import ApplicationNavigator from '@/navigation/Application';
 
+import { NDKProvider } from "@nostr-dev-kit/ndk-react";
+import "websocket-polyfill";
+
 import '@/translations';
 
 export const queryClient = new QueryClient({
@@ -25,15 +28,19 @@ export const queryClient = new QueryClient({
 
 export const storage = new MMKV();
 
+
 function App() {
   return (
-    <GluestackUIProvider mode="light"><GestureHandlerRootView>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider storage={storage}>
-            <ApplicationNavigator />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </GestureHandlerRootView></GluestackUIProvider>
+      <GluestackUIProvider mode="light">
+        <GestureHandlerRootView>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider storage={storage}>
+                <ApplicationNavigator />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </GestureHandlerRootView>
+      </GluestackUIProvider>
+    
   );
 }
 
