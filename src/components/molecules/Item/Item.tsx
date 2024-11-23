@@ -52,8 +52,8 @@ const Item = (props) => {
   console.log(parsedTags);
   // const content = JSON.parse(dictionary)
 
-  const price = parsedTags.price.join(" ")
-  
+  const price = parsedTags?.price ?? 0;
+
   // console.log(content.images.length() > 0)
   const images = [parsedTags.image]
   const imagesTrue = (images) ? true : false

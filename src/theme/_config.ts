@@ -7,6 +7,8 @@ export const enum Variant {
 }
 
 const colorsLight = {
+  white: '#FFFFFF',
+  lightPurple: '#F2E7FE',
   skeleton: '#A1A1A1',
   red500: '#C13333',
   gray800: '#303030',
@@ -32,7 +34,8 @@ const colorsDark = {
   purple50: '#1B1A23',
 } as const;
 
-const sizes = [12, 16, 24, 32, 40, 80] as const;
+const sizes = [8, 12, 14, 16, 24, 32, 36, 40, 80] as const;
+
 
 export const config = {
   colors: colorsLight,

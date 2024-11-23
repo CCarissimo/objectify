@@ -1,5 +1,5 @@
 export const enum Paths {
-  Example = 'example',
+  HomeScreen = 'homescreen',
   Startup = 'startup',
   CardsScreen = 'cardsscreen',
   CreateItem = 'createitem',

@@ -10,7 +10,6 @@ import { MMKV } from 'react-native-mmkv';
 import { ThemeProvider } from '@/theme';
 import ApplicationNavigator from '@/navigation/Application';
 
-import { NDKProvider } from "@nostr-dev-kit/ndk-react";
 import "websocket-polyfill";
 
 import '@/translations';

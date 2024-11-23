@@ -21,5 +21,17 @@ export default ({ layout, backgrounds, fonts }: ComponentTheme) => {
       height: 250,
       width: 250,
     },
+    cardButton: {
+      height: 120,
+      width: 120,
+      borderRadius: 16,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 3, // For Android shadow
+    }
   } as const satisfies AllStyle;
 };
