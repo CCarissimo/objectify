@@ -98,6 +98,27 @@ function HomeScreen({ navigation }: RootScreenProps<Paths.HomeScreen>) {
             />
             <Text style={[fonts.size_16, fonts.skeleton]}>Inventory</Text>
           </TouchableOpacity>
+
+          {/* Navigation Button - Profiles */}
+          <TouchableOpacity
+            onPress={() => navigateTo(Paths.Profiles)}
+            style={[
+              components.cardButton,
+              gutters.margin_16,
+              layout.itemsCenter,
+              backgrounds.lightPurple,
+            ]}
+            testID="profiles-button"
+            accessible={true}
+            accessibilityLabel="Navigate to Profiles"
+          >
+            <IconByVariant
+              path={'language'}
+              stroke={colors.purple500}
+              style={{ marginBottom: 12 }}
+            />
+            <Text style={[fonts.size_16, fonts.skeleton]}>Profiles</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Footer */}

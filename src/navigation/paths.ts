@@ -4,4 +4,5 @@ export const enum Paths {
   CardsScreen = 'cardsscreen',
   CreateItem = 'createitem',
   Inventory = 'inventory',
+  Profiles = 'profiles'
 }

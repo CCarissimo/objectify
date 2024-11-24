@@ -137,8 +137,17 @@ import Geolocation from "react-native-geolocation-service";
 import { finalizeEvent, Relay } from "nostr-tools";
 import "websocket-polyfill";
 import { PermissionsAndroid, Platform } from "react-native";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // Make sure the user installs react-native-image-picker and react-native-geolocation-service
+
+interface Profile {
+  id: string; // Unique identifier for each profile
+  privateKey: string;
+  publicKey: string;
+  nickname: string;
+}
+
+const STORAGE_KEY = 'profiles';
 
 function CreateItem() {
   const [title, setTitle] = useState("");
@@ -146,6 +155,7 @@ function CreateItem() {
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("");
+  const [profiles, setProfiles] = useState<Profile[]>([]);
 
   // Handle image selection
   const selectImage = async () => {
@@ -211,10 +221,15 @@ function CreateItem() {
   }
   };
 
-
   // Handle posting the event
   const postItem = async () => {
-    const secretKey = "2ef806494f0d556c9885af606c9d96d412861ef0ccc7a0b9046b9612216740ec";
+    const storedProfiles = await AsyncStorage.getItem(STORAGE_KEY);
+      if (storedProfiles) {
+        setProfiles(JSON.parse(storedProfiles));
+      }
+    console.log("profiles", profiles)
+    let secretKey = profiles[0].privateKey
+    // const secretKey = "2ef806494f0d556c9885af606c9d96d412861ef0ccc7a0b9046b9612216740ec";
     const timestamp = Math.floor(Date.now() / 1000);
 
     const relay = await Relay.connect('wss://relay.damus.io')

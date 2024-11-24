@@ -7,6 +7,7 @@ export type RootStackParamList = {
   [Paths.CardsScreen]: undefined;
   [Paths.CreateItem]: undefined;
   [Paths.Inventory]: undefined;
+  [Paths.Profiles]: undefined;
 };
 
 export type RootScreenProps<

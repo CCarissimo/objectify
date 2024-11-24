@@ -55,7 +55,7 @@ const Item = (props) => {
   const price = parsedTags?.price ?? 0;
 
   // console.log(content.images.length() > 0)
-  const images = [parsedTags.image]
+  const images = [parsedTags.image].flat(1)
   const imagesTrue = (images) ? true : false
   console.log("Item component: images from parsed tags")
   console.log(images)
