@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 interface Profile {
   id: string;
   privateKey: string;
@@ -40,6 +41,24 @@ const ProfileSelector: React.FC<ProfileSelectorProps> = ({ onSelectProfile }) =>
   };
 
   return (
+    <View style={styles.container}>
+    <Text style={styles.title}>Select a Profile</Text>
+    <FlatList
+      data={profiles}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <TouchableOpacity
+          style={[
+            styles.profileItem,
+            selectedProfileId === item.id && styles.selectedProfileItem,
+          ]}
+          onPress={() => handleSelectProfile(item)}
+        >
+          <Text style={styles.profileNickname}>{item.nickname}</Text>
+        </TouchableOpacity>
+      )}
+    />
+  </View>
     );
 };
 

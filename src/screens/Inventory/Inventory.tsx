@@ -146,6 +146,36 @@ import { Paths } from '@/navigation/paths';
 import "websocket-polyfill";
 import NDK from "@nostr-dev-kit/ndk";
 import NDKFilter from "@nostr-dev-kit/ndk";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+interface Profile {
+  id: string; // Unique identifier for each profile
+  privateKey: string;
+  publicKey: string;
+  nickname: string;
+}
+
+const [profiles, setProfiles] = useState<Profile[]>([]);
+
+// Get Profiles from Local Storage
+const getProfiles = async() => {
+  try {
+    const storedProfiles = await AsyncStorage.getItem('profiles');
+    if (storedProfiles) {
+      setProfiles(JSON.parse(storedProfiles));
+      console.log("list profiles log")
+      console.log(profiles)
+      console.log(typeof profiles)
+      console.log("log")
+    }
+  } catch (error) {
+    console.error('Error loading profiles:', error);
+  }
+  const pubkeys = profiles.map((profile) => profile.publicKey)
+  return (
+    pubkeys
+  )
+}
 
 function Inventory({ navigation }: RootScreenProps<Paths.Inventory>) {
   const relayUrls = [
@@ -157,7 +187,8 @@ function Inventory({ navigation }: RootScreenProps<Paths.Inventory>) {
   // State management
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [publicKeys, setPublicKeys] = useState(Object);
 
   const showFeed = useRef(true);
   const currentPost = useRef(null);
@@ -165,11 +196,30 @@ function Inventory({ navigation }: RootScreenProps<Paths.Inventory>) {
   // Fetch NOSTR events
   const getEvents = async () => {
     setLoading(true);
+    getProfiles();
+    try {
+      const storedProfiles = await AsyncStorage.getItem('profiles');
+      if (storedProfiles) {
+        setProfiles(JSON.parse(storedProfiles));
+        console.log("list profiles log")
+        console.log(profiles)
+        console.log(typeof profiles)
+        console.log("log")
+      }
+    } catch (error) {
+      console.error('Error loading profiles:', error);
+    }
+    setPublicKeys(profiles.map((profile) => profile.publicKey));
+    console.log(publicKeys)
+
     try {
       const ndk = new NDK({ explicitRelayUrls: relayUrls });
       await ndk.connect();
-
-      const filter: NDKFilter = { kinds: [30402], limit: 10 };
+      
+      const filter: NDKFilter = { 
+        kinds: [30402],
+        authors: publicKeys,
+        limit: 10 };
       const results = await ndk.fetchEvents(filter);
 
       const eventArray = Array.from(results);
@@ -178,7 +228,7 @@ function Inventory({ navigation }: RootScreenProps<Paths.Inventory>) {
       setError("Failed to fetch events. Please try again.");
       console.error(err);
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   };
 

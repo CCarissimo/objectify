@@ -1,128 +1,6 @@
-// // CreateItem.tsx
-
-// import { useRef, useState, useEffect } from "react";
-// import { SafeAreaView, StyleSheet, TextInput, Button, Text } from 'react-native';
-// import type { RootScreenProps } from '@/navigation/types';
-// import { Paths } from '@/navigation/paths';
-// import "websocket-polyfill";
-// import { finalizeEvent, generateSecretKey, getPublicKey } from 'nostr-tools'
-// import { Relay } from 'nostr-tools'
-
-// const relayUrls = [
-//   "wss://relay.damus.io",
-// ];
-
-// function PostButton() {
-
-//   const onPost = async () => {
-
-//     let sk = '2ef806494f0d556c9885af606c9d96d412861ef0ccc7a0b9046b9612216740ec';//generateSecretKey() // `sk` is a Uint8Array
-//     let pk = 'c5ee0d587dfb0e090bd9dbe98c08af65fd3c350e95a777592ecfced696d8d34c';//getPublicKey(sk) // `pk` is a hex string
-//     console.log("post button pressed")
-//     console.log("publicKey", pk)
-//     console.log("secretKey", sk)
-
-//     const relay = await Relay.connect('wss://relay.damus.io')
-//     console.log(`connected to ${relay.url}`)
-
-//     let time = Math.floor(Date.now() / 1000).toString()
-
-//     let eventTemplate = {
-//       kind: 30402,
-//       created_at: Math.floor(Date.now() / 1000),
-//       tags: [
-//         ["title", "classified listing test"],
-//         ["summary", "summary of test"],
-//         ["published_at", time],
-//         ["location", "Zurich"],
-//         ["price", "free"],
-//         ["image", "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg"]
-//       ],
-//       content: "you can run, but you can't hide Marcin",
-//     }
-    
-//     // this assigns the pubkey, calculates the event id and signs the event in a single step
-//     const signedEvent = finalizeEvent(eventTemplate, sk)
-//     await relay.publish(signedEvent)
-    
-//     relay.close()
-//     console.log("relay closed")
-//   }
-
-//   return (
-//     <Button onPress={onPost} title="Post a message!"></Button>
-//   );
-// }
-
-// const CreateItemInput = () => {
-//   const [title, onChangeTitle] = useState('');
-//   const [summary, onChangeSummary] = useState('');
-//   const [images, onChangeImages] = useState([]);
-//   const [price, onChangePrice] = useState('');
-//   const [location, onChangeLocation] = useState([]);
-
-//   return (
-//     <SafeAreaView>
-//       <Text>Create an Object</Text>
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={onChangeTitle}
-//         placeholder="title"
-//         value={title}
-//       />
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={onChangeSummary}
-//         value={summary}
-//         placeholder="summary"
-//       />
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={onChangeLocation}
-//         value={location}
-//         placeholder="location"
-//       />
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={onChangeImages}
-//         placeholder="image urls"
-//         value={images}
-//       />
-//       <TextInput
-//         style={styles.input}
-//         onChangeText={onChangePrice}
-//         placeholder="price"
-//         value={price}
-//         keyboardType="numeric"
-//       />
-//       <PostButton/> 
-//     </SafeAreaView>
-//   );
-// };
-
-// export default function CreateItem({ navigation }: RootScreenProps<Paths.CreateItem>) {
-  
-//   return (
-//     <CreateItemInput />
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   input: {
-//     height: 40,
-//     margin: 12,
-//     borderWidth: 1,
-//     padding: 10,
-//     backgroundColor: '#fff',
-//     fontSize: 16,
-//     color: '#333',
-//     shadowColor: '#000',
-//   },
-// });
-
 import React, { useState } from "react";
 import {
-  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -140,6 +18,9 @@ import { PermissionsAndroid, Platform } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // Make sure the user installs react-native-image-picker and react-native-geolocation-service
 
+import ProfileSelector from '@/components/molecules/ProfileSelector/ProfileSelector';
+
+
 interface Profile {
   id: string; // Unique identifier for each profile
   privateKey: string;
@@ -156,6 +37,10 @@ function CreateItem() {
   const [image, setImage] = useState(null);
   const [price, setPrice] = useState("");
   const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const handleProfileSelect = (profile: Profile) => {
+    setSelectedProfile(profile);
+  };
 
   // Handle image selection
   const selectImage = async () => {
@@ -228,7 +113,7 @@ function CreateItem() {
         setProfiles(JSON.parse(storedProfiles));
       }
     console.log("profiles", profiles)
-    let secretKey = profiles[0].privateKey
+    let secretKey = selectedProfile?.privateKey
     // const secretKey = "2ef806494f0d556c9885af606c9d96d412861ef0ccc7a0b9046b9612216740ec";
     const timestamp = Math.floor(Date.now() / 1000);
 
@@ -260,11 +145,21 @@ function CreateItem() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Create New Item</Text>
         <Text style={styles.subtitle}>Fill in the details below to create a new item listing.</Text>
       </View>
+      <View style={styles.container}>
+      <ProfileSelector onSelectProfile={handleProfileSelect} />
+      {selectedProfile && (
+        <View style={styles.profileDetails}>
+          <Text style={styles.detailText}>Selected Profile:</Text>
+          <Text style={styles.detailText}>Nickname: {selectedProfile.nickname}</Text>
+          <Text style={styles.detailText}>ID: {selectedProfile.id}</Text>
+        </View>
+      )}
+    </View>
       <View style={styles.form}>
         {/* Title Input */}
         <TextInput
@@ -318,7 +213,7 @@ function CreateItem() {
           <Text style={styles.buttonText}>Post Item</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -383,5 +278,15 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 8,
     marginBottom: 12,
+  },
+  profileDetails: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 5,
+  },
+  detailText: {
+    fontSize: 16,
+    marginBottom: 5,
   },
 });

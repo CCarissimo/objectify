@@ -11,7 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs (install with `npm i uuid`)
 import { generateSecretKey, getPublicKey } from 'nostr-tools';
-
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils' // already an installed dependency
 
 interface Profile {
   id: string; // Unique identifier for each profile
@@ -51,11 +51,12 @@ const Profiles = () => {
 
     let sk = generateSecretKey()
     let pk = getPublicKey(sk)
-    console.log(sk)
+    let skHex = bytesToHex(sk)
+    console.log(skHex)
     console.log(pk)
     const newProfile: Profile = {
       id: uuidv4(),
-      privateKey: sk.toString(), // Simulated private key
+      privateKey: skHex.toString(), // Simulated private key
       publicKey: pk.toString(), // Simulated public key
       nickname: newNickname,
     };
